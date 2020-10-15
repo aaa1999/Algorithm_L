@@ -48,6 +48,7 @@ public class Leetcode95_0 {
             List<TreeNode> leftTrees = generateTrees(start, i - 1);
 
             // 获得所有可行的右子树集合
+
             List<TreeNode> rightTrees = generateTrees(i + 1, end);
 
             // 从左子树集合中选出一棵左子树，从右子树集合中选出一棵右子树，拼接到根节点上
