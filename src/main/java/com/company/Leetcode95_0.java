@@ -10,7 +10,8 @@ import java.util.List;
 public class Leetcode95_0 {
     public static void main(String[] args) {
         Leetcode95_0 leetcode95_0 = new Leetcode95_0();
-        List<TreeNode> treeNodes = leetcode95_0.generateTrees(3);
+        List<TreeNode> treeNodes = leetcode95_0.generateTrees(2);
+
 //        System.out.println(treeNodes);
         for (TreeNode treenode :
                 treeNodes) {
@@ -48,6 +49,7 @@ public class Leetcode95_0 {
             List<TreeNode> leftTrees = generateTrees(start, i - 1);
 
             // 获得所有可行的右子树集合
+
 
             List<TreeNode> rightTrees = generateTrees(i + 1, end);
 
