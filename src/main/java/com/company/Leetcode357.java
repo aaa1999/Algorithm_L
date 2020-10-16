@@ -43,6 +43,7 @@ public class Leetcode357 {
 //            System.out.println(a);
             count += 1;
             dfs(n);
+
             a.remove(a.size() - 1);
         }
 
