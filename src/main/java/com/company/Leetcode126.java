@@ -10,47 +10,56 @@ public class Leetcode126 {
     public static void main(String[] args) {
         Leetcode126 leetcode126 = new Leetcode126();
 //        leetcode126
-        String beginWorld = "qa";
-        String endWord = "sq";
+        String beginWorld = "hit";
+        String endWord = "cog";
         //  ["hot","dot","dog","lot","log","cog"]
 //        List<String> wordList = new ArrayList<>(Arrays.asList("hot","dot","dog","lot","log","cog"));
         String[] a = {"si","go","se","cm","so","ph","mt","db","mb","sb","kr","ln","tm","le","av","sm","ar","ci","ca","br","ti","ba","to","ra","fa","yo","ow","sn","ya","cr","po","fe","ho","ma","re","or","rn","au","ur","rh","sr","tc","lt","lo","as","fr","nb","yb","if","pb","ge","th","pm","rb","sh","co","ga","li","ha","hz","no","bi","di","hi","qa","pi","os","uh","wm","an","me","mo","na","la","st","er","sc","ne","mn","mi","am","ex","pt","io","be","fm","ta","tb","ni","mr","pa","he","lr","sq","ye"};
 
-//        List<String> wordList = new ArrayList<>(Arrays.asList("hot","dot","dog","lot","log","cog"));
-        List<String> wordList = new ArrayList<>(Arrays.asList(a));
+        List<String> wordList = new ArrayList<>(Arrays.asList("hot","dot","dog","lot","log","cog"));
+//        List<String> wordList = new ArrayList<>(Arrays.asList(a));
 
-        long l = System.currentTimeMillis();
+//        long l = System.currentTimeMillis();
         List<List<String>> ladders = leetcode126.findLadders(beginWorld, endWord, wordList);
-        long l2 = System.currentTimeMillis();
+//        long l2 = System.currentTimeMillis();
         System.out.println(ladders);
-        System.out.println(l2 - l);
+//        System.out.println(l2 - l);
 
     }
 
     List<List<String>> result = new ArrayList<>();
     List<String> temp = new ArrayList<>();
 
+
     public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
         if (!wordList.contains(endWord)) return result;
 //        result.add(new ArrayList<>(beginWord));
 //        result.add(new ArrayList<String>())
         temp.add(new String(beginWord));
-        dfs(beginWord, endWord, wordList);
+        int[] cost = new int[wordList.size()];
 
+        for (int i = 0;i < wordList.size();i++) {
+            cost[i] = Integer.MAX_VALUE;
+        }
+
+        dfs(beginWord, endWord, wordList, cost);
 
         return result;
     }
 
-    public void dfs(String beginWord, String endWord, List<String> wordList) {
+    public void dfs(String beginWord, String endWord, List<String> wordList,int[] cost) {
+
 //        if ()
 
         if (beginWord.equals(endWord)) {
+
             if (result.isEmpty()) {
                 result.add(new ArrayList<>(temp));
                 return;
-
             }
+
             int minlength = result.get(result.size() - 1).size();
+
             if (minlength > temp.size()) {
                 return;
             }else if (minlength == temp.size()) {
@@ -61,6 +70,7 @@ public class Leetcode126 {
                 result.add(new ArrayList<>(temp));
                 return;
             }
+
             /*
             if (temp.size() < minInList(result)) {
                 result.removeAll(result);
@@ -75,15 +85,17 @@ public class Leetcode126 {
 
              */
         }
-
-            for (String word :
-                    wordList) {
-                if (!compareTwoWords(beginWord, word) || temp.contains(word)) continue;
-                temp.add(new String(word));
-                dfs(word, endWord, wordList);
+//            for (String word :
+//                    wordList) {
+        for (int i = 0;i < wordList.size();i++) {
+                if (!compareTwoWords(beginWord, wordList.get(i)) || temp.contains(wordList.get(i)) ) continue;
+                if (cost[i] <= temp.size() + 1) continue;
+                cost[i] = temp.size() + 1;
+                System.out.println(i + " " + cost[i]);
+                temp.add(new String(wordList.get(i)));
+                dfs(wordList.get(i), endWord, wordList,cost);
                 temp.remove(temp.size() - 1);
 //                temp.add(new String(word));
-
             }
         }
 
@@ -105,7 +117,7 @@ public class Leetcode126 {
     public boolean compareTwoWords (String a1, String a2){
 //        boolean flag = false;
         int count = 0;
-        for (int i = 0; i < a1.length(); i++) {
+        for (int i = 0; i < a1.length() ; i++) {
             if (a1.charAt(i) != a2.charAt(i)) count++;
         }
 
